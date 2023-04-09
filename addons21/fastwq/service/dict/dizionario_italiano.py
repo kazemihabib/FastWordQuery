@@ -6,6 +6,8 @@ from bs4 import Tag
 
 from ..base import *
 from datetime import datetime
+from aqt.sound import av_player
+
 
 dizionario_italiano_base_url = u'https://www.dizionario-italiano.it/dizionario-italiano.php?parola={}100'
 
@@ -51,6 +53,7 @@ class dizionarioItaliano(WebService):
         if audio_url:
             filename = get_hex_name(self.unique.lower(), audio_url, 'mp3')
             if os.path.exists(filename) or self.net_download(filename, audio_url):
+                av_player.play_file(filename)
                 return self.get_anki_label(filename, 'audio')
         return ''
 
